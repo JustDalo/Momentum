@@ -1,5 +1,6 @@
 // DOM Elements
 const time = document.getElementById("time"),
+	  date = document.getElementById("date"),
 	  greeting = document.getElementById("greeting"),
 	  name = document.getElementById("name"),
 	  focus = document.getElementById("focus");
@@ -11,12 +12,44 @@ function showTime() {
     	hour = today.getHours(),
 		min = today.getMinutes(),
     	sec = today.getSeconds();
-	
-    
-//Output
+	  
 	time.innerHTML = `${hour}<span>:<span>${addZero(min)}<span>:<span>${addZero(sec)}`;
-	
 	setTimeout(showTime, 1000);
+}
+
+//showDate
+function showDate() {
+	let monthdate = new Date(),
+		dayOfWeek = monthdate.getDay(),
+		day = monthdate.getDate(),
+		month = monthdate.getMonth();
+	
+	let weekDay = new Array(7);
+	weekDay[0] = "Sunday";
+	weekDay[1] = "Monday";
+	weekDay[2] = "Tuesday";
+	weekDay[3] = "Wednesday";
+	weekDay[4] = "Thursday";
+	weekDay[5] = "Friday";
+	weekDay[6] = "Saturday";
+	let currWeekDay = weekDay[dayOfWeek];
+	
+	let Monthes = new Array(12);
+	Monthes[0] = "January";
+	Monthes[1] = "February";
+	Monthes[2] = "March";
+	Monthes[3] = "April";
+	Monthes[4] = "May";
+	Monthes[5] = "June";
+	Monthes[6] = "July";
+	Monthes[7] = "August";
+	Monthes[8] = "September";
+	Monthes[9] = "October";
+	Monthes[10] = "November";
+	Monthes[11] = "December";
+	let currMonth = Monthes[month];
+	
+	date.innerHTML = `<span>Today <span>${currWeekDay}<span>, <span>${day}<span> <span>${currMonth}`;
 }
 
 //add zero
@@ -25,59 +58,66 @@ function addZero(n) {
 }
 
 //set Background and Greeting 
-function serBgGreet() {
+function setBgGreet() {
 	let today = new Date(),
 		hour = today.getHours();
 	if (hour < 6) {
-		document.body.style.backgroundImage = "url('img/night.jpg')";
+		document.body.style.backgroundImage = "url('img/Night/01.jpg')";
 		greeting.textContent = "Good Night";
 	}
 	else if (hour < 12) {
-		document.body.style.backgroundImage = "url('img/morning.jpg')";
-	
+		document.body.style.backgroundImage = "url('img/Morning/01.jpg')";
 		greeting.textContent = "Good Morning";
 	}
 	else if (hour < 18) {
-		document.body.style.backgroundImage = "url('img/afternoon.jpg')";
+		document.body.style.backgroundImage = "url('img/Afternoon/03.jpg')";
 		greeting.textContent = "Good Afternoon";
 	}
 	else {
-		document.body.style.backgroundImage = "url('img/evening.jpg')";
+		document.body.style.backgroundImage = "url('img/Evening/17.jpg')";
 		greeting.textContent = "Good Evening";
-	}
-	
-	
+	}	
 }
 
 //Get Name 
 function getName() {
-	if (localStorage.getItem('name') === null) {
-		name.textContent = '[Enter Name]';
-		
+	if (localStorage.getItem('name') === null || localStorage.getItem('name') === '') {
+		name.textContent = '[Enter Name]';	
+		localStorage.setItem('name', '[Enter Name]');
 	}
 	else {
 		name.textContent = localStorage.getItem('name');
 	}
 }
 
-//set Name
+//Set Name
 function setName(e) {
 	if (e.type === 'keypress') {
-		if (e.which == 13 || e.keyCode == 13) {
+		if ((e.which == 13 || e.keyCode == 13) && name.textContent != '') {
 			localStorage.setItem('name', e.target.innerText);
+			name.blur();
+		}
+		else if ((e.which == 13 || e.keyCode == 13) && name.textContent == '') {
+			name.textContent = localStorage.getItem('name');
 			name.blur();
 		}
 	}
 	else {
-		localStorage.setItem('name', e.target.innerText);
+		if (name.textContent != '') {
+			localStorage.setItem('name', e.target.innerText);
+		}
+		else {
+			name.textContent = localStorage.getItem('name');
+		}
 	}
 }
 
+
 //Get Focus
 function getFocus() {
-	if (localStorage.getItem('focus') === null) {
+	if (localStorage.getItem('focus') === null || localStorage.getItem('focus') === '') {
 		focus.textContent = '[Enter Focus]';
-		
+		localStorage.setItem('focus', '[Enter Focus]');
 	}
 	else {
 		focus.textContent = localStorage.getItem('focus');
@@ -87,13 +127,22 @@ function getFocus() {
 //Set Focus
 function setFocus(e) {
 	if (e.type === 'keypress') {
-		if (e.which == 13 || e.keyCode == 13) {
+		if ((e.which == 13 || e.keyCode == 13) && focus.textContent != '') {
 			localStorage.setItem('focus', e.target.innerText);
+			focus.blur();
+		}
+		else if ((e.which == 13 || e.keyCode == 13) && focus.textContent == '') {
+			focus.textContent = localStorage.getItem('focus');
 			focus.blur();
 		}
 	}
 	else {
-		localStorage.setItem('focus', e.target.innerText);
+		if (focus.textContent != '') {
+			localStorage.setItem('focus', e.target.innerText);
+		}
+		else {
+			focus.textContent = localStorage.getItem('focus');
+		}
 	}
 }
 
@@ -103,7 +152,9 @@ focus.addEventListener('keypress', setFocus);
 focus.addEventListener('blur', setFocus);
 
 //Run
+setBgGreet();
 showTime();
-serBgGreet();
+showDate();
 getName();
 getFocus();
+

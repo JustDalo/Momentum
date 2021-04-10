@@ -56,7 +56,7 @@ function changeBackground() {
 	console.log(imageSrc);
 	viewBackGroundImg(imageSrc);
 	j++;
-	setTimeout(changeBackground, (60 - sec) * 1000);
+	setTimeout(changeBackground, (60 * 60 - (min * 60 + sec)) * 1000);
 }
 
 

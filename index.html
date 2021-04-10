@@ -22,7 +22,30 @@
 		<div>
 			<button class="backgroundBtn" type="button">Next Image</button>
 		</div>
+		<script src = "js/changeBackground.js"></script>
 		
-		<script src = "main.js"></script>
+		<div class="quoteBox" id="quote-box">
+			<h1 class="quote" id="text"></h1>
+			<h1 class="author" id="author"></h1>
+			
+			<div class="btn">
+				<button type="button" class="get-quote" id="new-quote">Get Quote</button>
+			</div>
+  		</div>
+		<script src = "js/setQuote.js"></script>
+		
+		<div class = "weatherBox">
+			<div class = "weatherForcast">
+				<i class="weather-icon owf"></i>	
+				<div class="temperature"></div>
+			</div>
+			<div class="city" contenteditable="true"></div>
+		  	<div class="weatherDescription"></div>
+			<div class = "humidity"></div>
+			<div class = "windSpeed"></div>
+		</div>
+		<script src = "js/setWeatherForcast.js"></script>
+		
+		<script src = "js/main.js"></script>
     </body>
 </html>
